@@ -1,0 +1,6 @@
+how download video youtube/
+└── pip pytube/
+    ├── download video youtube
+        └── YouTube - stream in yt.streams
+    └── download playlist video youtube
+        └── Playlist - video in pl.videos
