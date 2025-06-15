@@ -7,7 +7,7 @@ try:
     
     video_stream = yt.streams.get_highest_resolution()
     
-    print(f"download video: {yt.title}")
+    print(f"download video...: {yt.title}")
     video_stream.download()
     
     print("✅ Download successfully!")
