@@ -7,10 +7,10 @@ try:
     
     video_stream = yt.streams.get_highest_resolution()
     
-    print(f"don: {yt.title}")
+    print(f"download video: {yt.title}")
     video_stream.download()
     
-    print("✅ Downloaded successfully!")
+    print("✅ Download successfully!")
 
 except Exception as e:
     print(f"❌ An error occurred while downloading: {e}")
