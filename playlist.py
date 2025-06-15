@@ -1,6 +1,6 @@
 from pytube import Playlist
 
-playlist_url = input("أدخل رابط قائمة التشغيل من يوتيوب: ")
+playlist_url = input("enter url playlist video in youtube: ")
 
 try:
     pl = Playlist(playlist_url)
