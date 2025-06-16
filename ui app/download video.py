@@ -9,7 +9,7 @@ class YouTubeDownloaderApp:
         self.master = master
         master.title("B-Sigma | YouTube Downloader")
         master.geometry('550x450')
-        master.configure(bg="#202033")
+        master.configure(bg="#AFAFAF")
         master.resizable(False, False) # Disable resizing
 
         # Title Label
@@ -17,7 +17,7 @@ class YouTubeDownloaderApp:
                                     text='YouTube Video/Playlist Downloader',
                                     font=('arial', 20, 'bold'),
                                     fg='white',
-                                    bg='#202033')
+                                    bg="#AFAFAF")
         self.title_label.pack(pady=20)
 
         # Link Label
@@ -25,23 +25,23 @@ class YouTubeDownloaderApp:
                                    text='Paste Link Here:',
                                    font=('arial', 15, 'bold'),
                                    fg='white',
-                                   bg='#202033')
+                                   bg='#AFAFAF')
         self.link_label.place(x=180, y=80)
 
         # Link Entry
         self.link_var = tk.StringVar()
         self.link_entry = tk.Entry(master,
-                                   width=60,
+                                   width=50,
                                    textvariable=self.link_var,
                                    font=('arial', 12))
-        self.link_entry.place(x=50, y=120, height=30)
+        self.link_entry.place(x=49, y=120, height=30)
 
         # Message Label for status updates
         self.message_label = tk.Label(master,
                                       text='Enter URL and choose download type',
                                       font=('arial', 12),
-                                      fg='lightgreen',
-                                      bg='#202033')
+                                      fg="#FFFFFF",
+                                      bg='#AFAFAF')
         self.message_label.place(x=100, y=170)
 
         # Download Path Label and Button
@@ -50,13 +50,13 @@ class YouTubeDownloaderApp:
                                    textvariable=self.path_label_text,
                                    font=('arial', 10),
                                    fg='white',
-                                   bg='#202033')
+                                   bg='#AFAFAF')
         self.path_label.place(x=50, y=210)
 
         self.path_button = tk.Button(master,
                                      text='Choose Download Folder',
                                      font=('arial', 10, 'bold'),
-                                     bg='#4CAF50', # Greenish
+                                     bg="#7C7C7C", # Greenish
                                      fg='white',
                                      command=self.choose_download_path)
         self.path_button.place(x=350, y=205)
@@ -67,7 +67,7 @@ class YouTubeDownloaderApp:
         self.download_video_button = tk.Button(master,
                                                text='Download Video',
                                                font=('arial', 15, 'bold'),
-                                               bg='pale violet red',
+                                               bg='#7C7C7C',
                                                padx=10,
                                                command=self.start_video_download_thread)
         self.download_video_button.place(x=80, y=280)
@@ -76,7 +76,7 @@ class YouTubeDownloaderApp:
         self.download_playlist_button = tk.Button(master,
                                                   text='Download Playlist',
                                                   font=('arial', 15, 'bold'),
-                                                  bg='#00BFFF', # Deep sky blue
+                                                  bg='#7C7C7C', # Deep sky blue
                                                   padx=10,
                                                   command=self.start_playlist_download_thread)
         self.download_playlist_button.place(x=280, y=280)
@@ -85,10 +85,10 @@ class YouTubeDownloaderApp:
         self.exit_button = tk.Button(master,
                                      text='Exit',
                                      font=('arial', 12, 'bold'),
-                                     bg='#FF6347', # Tomato red
+                                     bg='#7C7C7C', # Tomato red
                                      fg='white',
                                      command=master.quit)
-        self.exit_button.place(x=240, y=360)
+        self.exit_button.place(x=252, y=360)
 
 
     def choose_download_path(self):
@@ -99,7 +99,7 @@ class YouTubeDownloaderApp:
             self.path_label_text.set(f"Download Path: {os.path.basename(folder_selected)}")
             self.update_message(f"Download folder set to: {os.path.basename(folder_selected)}", 'lightblue')
         else:
-            self.update_message("Download folder selection cancelled.", 'orange')
+            self.update_message("Download folder selection cancelled.", '#FFFFFF')
 
 
     def update_message(self, message, color='lightgreen'):
@@ -119,10 +119,10 @@ class YouTubeDownloaderApp:
         """Starts video download in a separate thread to keep GUI responsive."""
         url = self.link_var.get()
         if not url:
-            self.update_message("Please paste a YouTube video URL.", 'yellow')
+            self.update_message("Please paste a YouTube video URL.", "#FFFFFF")
             return
         self.set_buttons_state(tk.DISABLED)
-        self.update_message("Starting video download...", 'yellow')
+        self.update_message("Starting video download...", "#FFFFFF")
         download_thread = threading.Thread(target=self._download_single_video, args=(url,))
         download_thread.start()
 
@@ -131,10 +131,10 @@ class YouTubeDownloaderApp:
         """Starts playlist download in a separate thread to keep GUI responsive."""
         url = self.link_var.get()
         if not url:
-            self.update_message("Please paste a YouTube playlist URL.", 'yellow')
+            self.update_message("Please paste a YouTube playlist URL.", "#FFFFFF")
             return
         self.set_buttons_state(tk.DISABLED)
-        self.update_message("Starting playlist download...", 'yellow')
+        self.update_message("Starting playlist download...", "#FFFFFF")
         download_thread = threading.Thread(target=self._download_playlist, args=(url,))
         download_thread.start()
 
@@ -143,7 +143,7 @@ class YouTubeDownloaderApp:
         """Handles the logic for downloading a single video."""
         try:
             yt = YouTube(url, on_progress_callback=self.on_progress)
-            self.update_message(f"Downloading video: {yt.title}", 'yellow')
+            self.update_message(f"Downloading video: {yt.title}", "#FFFFFF")
             video_stream = yt.streams.get_highest_resolution()
             video_stream.download(output_path=self.download_path)
             self.update_message(f"✅ Downloaded: {yt.title}", 'lightgreen')
@@ -157,14 +157,14 @@ class YouTubeDownloaderApp:
         """Handles the logic for downloading a playlist."""
         try:
             pl = Playlist(playlist_url)
-            self.update_message(f"Downloading playlist: {pl.title} ({len(pl.video_urls)} videos)", 'yellow')
+            self.update_message(f"Downloading playlist: {pl.title} ({len(pl.video_urls)} videos)", '#FFFFFF')
 
             # Create a specific subfolder for the playlist
             playlist_folder = os.path.join(self.download_path, f"Playlist_{pl.title.replace(' ', '_')}")
             os.makedirs(playlist_folder, exist_ok=True) # Create folder if it doesn't exist
 
             for index, video in enumerate(pl.videos, start=1):
-                self.update_message(f"[{index}/{len(pl.video_urls)}] Downloading: {video.title}", 'yellow')
+                self.update_message(f"[{index}/{len(pl.video_urls)}] Downloading: {video.title}", '#FFFFFF')
                 video.streams.get_highest_resolution().download(output_path=playlist_folder)
             self.update_message(f"✅ Downloaded playlist: {pl.title}", 'lightgreen')
         except Exception as e:
@@ -178,7 +178,7 @@ class YouTubeDownloaderApp:
         total_size = stream.filesize
         bytes_downloaded = total_size - bytes_remaining
         percentage_of_completion = bytes_downloaded / total_size * 100
-        self.update_message(f"Downloading: {percentage_of_completion:.2f}%", 'yellow')
+        self.update_message(f"Downloading: {percentage_of_completion:.2f}%", '#FFFFFF')
 
 
 if __name__ == '__main__':
